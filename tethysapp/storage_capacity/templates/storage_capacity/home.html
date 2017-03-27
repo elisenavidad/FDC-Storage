@@ -33,9 +33,9 @@
       <div class="modal-body">
         <div id="welcome-info">
           <div class="line">
-            <p id="desc">This application calculates the storage capacity of a potential reservoir given a location at
-              any stream within the Dominican Republic and a dam height. Follow the steps below in order to successfully
-              calculate storage capacity.</p>
+            <p id="desc">This application calculates the storage capacity and flow-duration curve of a potential reservoir given a location at
+              any stream within the Dominican Republic, a dam height, and a curve number. Follow the steps below in order to successfully
+              calculate storage capacity and flow-duration curves.</p>
           </div>
           <ol>
           <li class="modalList">Zoom to location</li>
@@ -46,11 +46,13 @@
           <li class="modalList">Specify dam height</li>
           <span class="sub">Enter a desired dam height in the text box below "Enter Dam Height (Meters)". The
           default value is set to 100 meters.</span>
+          <li class="modalList">Specify curve number</li>
+          <span class="sub">Enter a curve number in the text box below "Enter Curve Number". The default value is set to 80.</span>
           <li class="modalList">Calculate storage capacity</li>
           <span class="sub">Click the "Submit" button to begin calculating storage capacity. </span>
           <li class="modalList">Review results</li>
-          <span class="sub">After clicking the "Submit" button, the application will produce a total volume  in cubic
-            meters, and draw both a watershed and a reservoir area on the map.</span>
+          <span class="sub">After clicking the "Submit" button, the application will produce a total volume in cubic
+            meters, and draw both a watershed and a reservoir area on the map. The flow-duration curve can be found on the results page.</span>
           </ol>
           <div class="modalNote">
             <span>
@@ -63,7 +65,7 @@
       </div>
       <div class="modal-footer">
         <div id="byu-logo-container">
-          <span><i>Developed at the BYU Environmental Research Modelling Lab</i></span>
+          <span><i>Developed at the BYU Environmental Research Modeling Lab</i></span>
           <img src="{% static 'storage_capacity/images/byu-logo.png' %}"/>
         </div>
         <button type="button" class="btn btn-default" id="close-popup" data-dismiss="modal">Close</button>

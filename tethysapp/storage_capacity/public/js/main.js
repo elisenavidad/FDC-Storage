@@ -48,7 +48,7 @@ require(["dojo/dom",
     map.enableSnapping({alwaysSnap: true}).setLayerInfos(layerInfos);
 
     //creates geoprocessing task by calling geoprocessing service for server
-    gp = new Geoprocessor("http://geoserver.byu.edu/arcgis/rest/services/hydropower_mskl/reservoirVolumeDR/GPServer/Reservoir%20Volume");
+    gp = new Geoprocessor("http://geoserver.byu.edu/arcgis/rest/services/FDC_Jackson/FDCCalc3/GPServer/FDC%20Calculator");
     gp.setOutputSpatialReference({wkid: 102100});
 
     //creates drawing tool
@@ -79,7 +79,8 @@ require(["dojo/dom",
     function submitResRequest() {
         var params = {
             "pour_point": featureSet,
-            "height": $("#damHeight").val()
+            "height": $("#damHeight").val(),
+            "curve_number": $("curvenumber").val(),
         };
         map.setMapCursor("progress");
         gp.submitJob(params, completeCallback, statusCallback);
@@ -122,6 +123,7 @@ require(["dojo/dom",
         gp.getResultData(jobInfo.jobId, "watershed", drawWatershed, failedCallback);
         gp.getResultData(jobInfo.jobId, "reservoir", drawReservoir);
         gp.getResultData(jobInfo.jobId, "volume", getVolume);
+        gp.getResultData(jobInfo.jobId, "results", getResults);
     }
 
     //prints alert for wrong input point on failed request
@@ -165,11 +167,20 @@ require(["dojo/dom",
             "url": volume.value.url,
             "handleAs": "text"
         });
+        req.then(volrequestSucceeded, volrequestFailed);
+    }
+
+    //sends request to get results text file from server
+    function getResults(results) {
+        var req=esriRequest({
+            "url": results.value.url,
+            "handleAs":"text"
+        });
         req.then(requestSucceeded, requestFailed);
     }
 
-    //manipulates text dile and adds total volume to app on successful text file request
-    function requestSucceeded(response){
+    //manipulates text file and adds total volume to app on successful text file request
+    function volrequestSucceeded(response){
         var elem = response.split(",");
         var volNumber = Number(elem[elem.length - 1]).toFixed(2);
         $("#vol").html(
@@ -180,9 +191,11 @@ require(["dojo/dom",
     }
 
     //returns error on failed text file request
-    function requestFailed(error){
+    function volrequestFailed(error){
         $("#vol").html("<p class='bg-danger'>Error: " + error + " happened while retrieving the volume</p>");
     }
+
+    //
 
     //adds public functions to variable app
     app = {map: map, drawPoint: drawPoint, submitResRequest: submitResRequest};

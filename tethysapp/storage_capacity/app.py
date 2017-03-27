@@ -6,13 +6,13 @@ class StorageCapacity(TethysAppBase):
     Tethys app class for Storage Capacity.
     """
 
-    name = 'Storage Capacity'
+    name = 'FDC and Storage Capacity'
     index = 'storage_capacity:home'
     icon = 'storage_capacity/images/dam_icon.svg'
     package = 'storage_capacity'
     root_url = 'storage-capacity'
     color = 'blue'
-    description = 'Calculate potential reservoir storage capacity at specific location in the DR given a dam height.'
+    description = 'Calculate potential reservoir storage capacity and a flow duration curve at specific location in the DR given a dam height and curve number.'
     tags = 'StorageCapacity'
     enable_feedback = False
     feedback_emails = []

@@ -14,13 +14,17 @@
 
 {% block app_navigation_items %}
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#welcome-popup">Instructions</button>
-  <a class="btn btn-default" href="https://github.com/msouff/storageCapacityDR" target="_blank">More Info</a>
+  <a class="btn btn-default" href="https://github.com/elisenavidad/FDC" target="_blank">More Info</a>
   <br /><br />
   <button type="button" id="initDraw" class="btn btn-primary" onclick="app.drawPoint()">Click here to draw point</button>
   <div class="form-group " style="padding-top: 10px;">
     <label class="control-label" for="damHeight">Enter Dam Height (Meters):</label>
     <div class="input-group">
       <input id="damHeight" class="form-control" name="damHeight" type="text" value="100">
+    </div>
+    <label class="control-label" for="curvenumber">Enter Curve Number:</label>
+    <div class="input-group">
+    <input id="curvenumber" class="form-control" name="curvenumber" type="text" value="80">
     </div>
   </div>
 
