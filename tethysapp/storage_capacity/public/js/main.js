@@ -195,7 +195,18 @@ require(["dojo/dom",
         $("#vol").html("<p class='bg-danger'>Error: " + error + " happened while retrieving the volume</p>");
     }
 
-    //
+    //manipulates results.txt to display on results page
+    function requestSucceeded(response){
+        var resultsList = eval(response);
+        var percentList=[99,95,90,85,80,75,70,60,50,40,30,20];
+        $("#fdc").html(
+            "<h6>FDC Values:</h6>"+"<p>"+resultsList+"</p>");
+    }
+
+    //returns error on failed results text file request
+    function requestFailed(error){
+        $("#fdc").html("<p class='bg-danger'>Error: " + error + " happened while retrieving the fdc values</p>")
+    }
 
     //adds public functions to variable app
     app = {map: map, drawPoint: drawPoint, submitResRequest: submitResRequest};

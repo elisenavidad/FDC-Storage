@@ -1,0 +1,19 @@
+{% extends "storage_capacity/base.html"%}
+{% load tethys_gizmos %}
+
+{% block app_navigation_items%}
+
+<li><a href="{% url 'storage_capacity:home' %}">Home</a></li>
+<li class="active"><a href="{%url 'storage_capacity:results'%}">Results</a></li>
+
+{% endblock %}
+
+{% block app_content%}
+<h2>Flow-Duration Curve Results</h2>
+<div class="row">
+{% gizmo table_view capacity_tbv %}
+</div>
+<div class="col-md-9">
+
+{%endblock%}
+

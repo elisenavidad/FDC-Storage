@@ -10,3 +10,10 @@ def home(request):
     context = {}
 
     return render(request, 'storage_capacity/home.html', context)
+
+def results(request):
+	"""
+	Controller for the app results page.
+	"""
+	context={}
+	return render(request, 'storage_capacity/results.html',context)
