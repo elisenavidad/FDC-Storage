@@ -1,0 +1,19 @@
+{% extends "storage_capacity/base.html"%}
+{% load tethys_gizmos %}
+
+{% block app_navigation_items%}
+
+<li><a href="{% url 'storage_capacity:home' %}">Home</a></li>
+<li class="active"><a href="{%url 'storage_capacity:resultspage'%}">Results</a></li>
+
+{% endblock %}
+
+{% block app_content%}
+<h2>Flow-Duration Curve Results</h2>
+<div>
+{% gizmo plot_view plot_view %}
+</div>
+<script src="https://js.arcgis.com/3.16/"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+{% endblock %}

@@ -27,9 +27,9 @@ class StorageCapacity(TethysAppBase):
         url_maps = (UrlMap(name='home',
                            url='storage-capacity',
                            controller='storage_capacity.controllers.home'),
-                    UrlMap(name='results',
-                        url='results',
-                        controller='storage_capacity.controllers.results'),
+                    UrlMap(name='resultspage',
+                        url='resultspage',
+                        controller='storage_capacity.controllers.resultspage'),
         )
 
         return url_maps

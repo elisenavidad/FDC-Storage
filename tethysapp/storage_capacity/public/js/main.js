@@ -24,7 +24,8 @@ require(["dojo/dom",
     "esri/tasks/LinearUnit",
     "esri/symbols/SimpleMarkerSymbol",
     "esri/symbols/SimpleLineSymbol",
-    "esri/symbols/SimpleFillSymbol","esri/request"],
+    "esri/symbols/SimpleFillSymbol",
+    "esri/request"],
     function(dom, array, Color, Map, Draw, FeatureLayer, SnappingManager,
              Graphic, graphicsUtils, Geoprocessor, FeatureSet, LinearUnit,
              SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol, esriRequest) {
@@ -48,7 +49,7 @@ require(["dojo/dom",
     map.enableSnapping({alwaysSnap: true}).setLayerInfos(layerInfos);
 
     //creates geoprocessing task by calling geoprocessing service for server
-    gp = new Geoprocessor("http://geoserver.byu.edu/arcgis/rest/services/FDC_Jackson/FDCCalc3/GPServer/FDC%20Calculator");
+    gp = new Geoprocessor("http://geoserver.byu.edu/arcgis/rest/services/FDC_Jackson/FDC4/GPServer/FDC%20Calculator");
     gp.setOutputSpatialReference({wkid: 102100});
 
     //creates drawing tool
@@ -108,6 +109,7 @@ require(["dojo/dom",
 
     //displays request status
     function statusCallback(jobInfo) {
+        console.log(jobInfo);
         if (jobInfo.jobStatus === "esriJobSubmitted") {
             $("#vol").html("<h6>Request submitted...</h6>");
         } else if (jobInfo.jobStatus === "esriJobExecuting") {
