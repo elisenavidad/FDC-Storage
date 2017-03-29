@@ -11,7 +11,7 @@ This application was built for the purpose of computing reservoir volumes and fl
 
 Clone the repository:
 ```
-$ git clone https://github.com/msouff/storageCapacityDR.git
+$ git clone https://github.com/elisenavidad/FDC-Storage.git
 ```
 Then install the app in Tethys Platform.
 
@@ -36,7 +36,7 @@ This application is licensed under an open source MIT license.
 
 ####Application Design
 
-A simple approach was taken when designing the front end part of the app. We tried to make as intuitive as possible. A help guide is provided in the app in case any of the steps necessary to run the app is not clear enough. The application was designed as a one-page website. It can be accessed from BYU Tethys portal (http://tethys.byu.edu/) as shown in Figure 1 below. A zoomed in image of the buttons used to calculate a potential dam and reservoir volume is shown in Figure 2. After running the application successfully, the calculated reservoir will appear on the main map window with the calculated reservoir volume in cubic meters, shown in Figure 3.
+A simple approach was taken when designing the front end part of the app. A help guide is provided in the app in case any of the steps necessary to run the app is not clear enough. The application was designed as a two-page website. It can be accessed from BYU Tethys portal (http://tethys.byu.edu/) as shown in Figure 1 below. A zoomed in image of the buttons used to calculate a potential dam and reservoir volume, and generate the flow-duration curve is shown in Figure 2. After running the application successfully, the calculated reservoir will appear on the main map window with the calculated reservoir volume in cubic meters, shown in Figure 3.  The flow-duration curve can be found on the results page of the application by clicking the "FDC Results" button.
 
 An alternative to using Tethys is possible, since this app mainly used the ArcGIS API for JavaScript for most of 
 its functionality (see main.js file in the repository), however, an HTML page together with styling would need to be 
@@ -45,7 +45,7 @@ developed from zero to pursue this alternative.
 <img border=0 width=396 height=245 id="Picture 1"
 src="https://github.com/msouff/storageCapacityDR/blob/master/tethysapp/storage_capacity/public/images/chooseappSCREENSHOT.JPG">
 
-Figure 1. Home page of Tethys Portal to access Storage Capacity application.
+Figure 1. Home page of Tethys Portal to access Storage Capacity-FDC application.
 
 <img border=0 width=301 height=340 id="Picture 3"
 src="https://github.com/msouff/storageCapacityDR/blob/master/tethysapp/storage_capacity/public/images/optionSCREENSHOT.JPG">
