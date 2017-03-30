@@ -81,7 +81,7 @@ require(["dojo/dom",
         var params = {
             "pour_point": featureSet,
             "height": $("#damHeight").val(),
-            "curve_number": $("curvenumber").val(),
+            "curve_number": $("#curvenumber").val(),
         };
         map.setMapCursor("progress");
         gp.submitJob(params, completeCallback, statusCallback);
@@ -109,7 +109,7 @@ require(["dojo/dom",
 
     //displays request status
     function statusCallback(jobInfo) {
-        console.log(jobInfo);
+        // console.log(jobInfo);
         if (jobInfo.jobStatus === "esriJobSubmitted") {
             $("#vol").html("<h6>Request submitted...</h6>");
         } else if (jobInfo.jobStatus === "esriJobExecuting") {
@@ -121,7 +121,8 @@ require(["dojo/dom",
 
     //calls draw reservoir and get volume on success, or failedcallback on failed request
     function completeCallback(jobInfo) {
-        map.graphics.clear()
+        map.graphics.clear();
+        console.log(jobInfo);
         gp.getResultData(jobInfo.jobId, "watershed", drawWatershed, failedCallback);
         gp.getResultData(jobInfo.jobId, "reservoir", drawReservoir);
         gp.getResultData(jobInfo.jobId, "volume", getVolume);
@@ -169,6 +170,7 @@ require(["dojo/dom",
             "url": volume.value.url,
             "handleAs": "text"
         });
+        console.log(req)
         req.then(volrequestSucceeded, volrequestFailed);
     }
 
@@ -178,6 +180,7 @@ require(["dojo/dom",
             "url": results.value.url,
             "handleAs":"text"
         });
+        console.log(req)
         req.then(requestSucceeded, requestFailed);
     }
 
@@ -200,18 +203,18 @@ require(["dojo/dom",
     //manipulates results.txt to display on results page
     function requestSucceeded(response){
         console.log(response)
-        var dataPoints=response;
-        var Lines=dataPoints.split('\n');
-        for (var i=0; i <Lines.length; i++)
-            if (Lines[i].length>0){
-                var points=Lines[i].split(',');
-                dataPoints.push({
-                    x:parseFloat(points[0]),
-                    y:parseFloat(points[1])
-                });
-            }
-            return dataPoints
-            alert(dataPoints.x)
+        // var dataPoints=response;
+        // var Lines=dataPoints.split('\n');
+        // for (var i=0; i <Lines.length; i++)
+        //     if (Lines[i].length>0){
+        //         var points=Lines[i].split(',');
+        //         dataPoints.push({
+        //             x:parseFloat(points[0]),
+        //             y:parseFloat(points[1])
+        //         });
+        //     }
+        //     return dataPoints
+        //     alert(dataPoints.x)
 
     }
 
