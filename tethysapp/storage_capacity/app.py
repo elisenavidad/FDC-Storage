@@ -33,3 +33,14 @@ class StorageCapacity(TethysAppBase):
         )
 
         return url_maps
+
+    def persistent_stores(self):
+        """
+        Add one or more pesistent stores
+        """
+
+        stores=(PersistentStore(name='fdc_db',
+                                initializer='storage_capacity.init_stores.init_fdc_db',
+                                ),
+        )
+        return stores

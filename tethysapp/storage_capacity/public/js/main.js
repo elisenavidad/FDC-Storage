@@ -199,6 +199,7 @@ require(["dojo/dom",
 
     //manipulates results.txt to display on results page
     function requestSucceeded(response){
+        console.log(response)
         var dataPoints=response;
         var Lines=dataPoints.split('\n');
         for (var i=0; i <Lines.length; i++)
@@ -220,6 +221,7 @@ require(["dojo/dom",
     }
     //creates CSV file for chart
     function pointsManip(data){
+
         var dataPoints=data;
         var Lines=dataPoints.split('\n');
         for (var i=0; i <Lines.length; i++)

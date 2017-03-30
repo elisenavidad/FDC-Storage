@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from tethys_sdk.gizmos import TableView, LinePlot
 
+from .model import SessionMaker, FlowDurationData
 
 @login_required()
 def home(request):
@@ -16,10 +17,30 @@ def resultspage(request):
 	"""
 	Controller for the app results page.
 	"""
+	session=SessionMaker()
+	fdcDataQuery=session.query(FlowDurationData)
+	if 'results' in request.POST['app.stores']:
+		with open(results,'r') as f:
+			lines=f.read().splitlines()
+
+		lines.pop(0)
+		session=SessionMaker()
+
+		for line in lines:
+			row=line.split(',')
+			fdc_row=fdcData(
+				percent=row[0],
+				flow=row[1],
+				units='m^3/s'
+				)
+
+			session.add(fdc_row)
+		session.commit()
+		session.close()
+
+	print session
 	fdc_tbv=TableView(column_names=('Percent (%)', unicode('Flow (m'+u'\u00b3'+'/s)')),
-					rows=[('Bill', 30),
-                             ('Fred', 18),
-                             ('Bob', 26)],
+					rows=fdcDataQuery,
 					hover=True,
 					striped=True,
 					bordered=True,
@@ -43,13 +64,7 @@ def resultspage(request):
 			'name': 'Flow',
 			'color': '#0066ff',
 			'marker': {'enabled':False},
-			'data': [
-               [0, 5], [10, -70],
-               [20, -86.5], [30, -66.5],
-               [40, -32.1],
-               [50, -12.5], [60, -47.7],
-               [70, -85.7], [80, -106.5]
-           ]
+			'data': fdcDataQuery
 
 		}]
 
