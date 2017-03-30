@@ -199,15 +199,38 @@ require(["dojo/dom",
 
     //manipulates results.txt to display on results page
     function requestSucceeded(response){
-        var resultsList = eval(response);
-        var percentList=[99,95,90,85,80,75,70,60,50,40,30,20];
-        $("#fdc").html(
-            "<h6>FDC Values:</h6>"+"<p>"+resultsList+"</p>");
+        var dataPoints=response;
+        var Lines=dataPoints.split('\n');
+        for (var i=0; i <Lines.length; i++)
+            if (Lines[i].length>0){
+                var points=Lines[i].split(',');
+                dataPoints.push({
+                    x:parseFloat(points[0]),
+                    y:parseFloat(points[1])
+                });
+            }
+            return dataPoints
+            alert(dataPoints.x)
+
     }
 
     //returns error on failed results text file request
     function requestFailed(error){
         $("#fdc").html("<p class='bg-danger'>Error: " + error + " happened while retrieving the fdc values</p>")
+    }
+    //creates CSV file for chart
+    function pointsManip(data){
+        var dataPoints=data;
+        var Lines=dataPoints.split('\n');
+        for (var i=0; i <Lines.length; i++)
+            if (Lines[i].length>0){
+                var points=Lines[i].split(',');
+                dataPoints.push({
+                    x:parseFloat(points[0]),
+                    y:parseFloat(points[1])
+                });
+            }
+            return dataPoints
     }
 
     //adds public functions to variable app
