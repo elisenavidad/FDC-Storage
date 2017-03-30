@@ -170,7 +170,7 @@ require(["dojo/dom",
             "url": volume.value.url,
             "handleAs": "text"
         });
-        console.log(req)
+        alert(req)
         req.then(volrequestSucceeded, volrequestFailed);
     }
 
@@ -180,7 +180,7 @@ require(["dojo/dom",
             "url": results.value.url,
             "handleAs":"text"
         });
-        console.log(req)
+        alert("req")
         req.then(requestSucceeded, requestFailed);
     }
 
@@ -203,19 +203,29 @@ require(["dojo/dom",
     //manipulates results.txt to display on results page
     function requestSucceeded(response){
         console.log(response)
-        // var dataPoints=response;
-        // var Lines=dataPoints.split('\n');
-        // for (var i=0; i <Lines.length; i++)
-        //     if (Lines[i].length>0){
-        //         var points=Lines[i].split(',');
-        //         dataPoints.push({
-        //             x:parseFloat(points[0]),
-        //             y:parseFloat(points[1])
-        //         });
+        alert(response)
+        // var elem=response.split("/n");
+        // var responsedata=[];
+        // var headers=elem[0].split(",");
+        // for(var i=1;i<elems.length;i++){
+        //     var obj={};
+        //     var currentline=elem[i].split(",");
+        //     for(var j=0;j<headers.length;j++){\
+        //         obj[headers[j]]=currentline[j];
         //     }
-        //     return dataPoints
-        //     alert(dataPoints.x)
+        // responsedata.push(obj);
 
+        // }
+        // //return result as JSON object
+        // console.log(responsedata);
+        // return JSON.stringify(responsedata);
+
+        // $.ajax({
+        //     type:"POST",
+        //     dataType:"json",
+        //     url: "'storage_capacity/controllers.py",
+        //     data: responsedata
+        // })
     }
 
     //returns error on failed results text file request

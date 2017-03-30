@@ -17,36 +17,36 @@ def resultspage(request):
 	"""
 	Controller for the app results page.
 	"""
-	session=SessionMaker()
-	fdcDataQuery=session.query(FlowDurationData)
-	if 'results' in request.POST['app.stores']:
-		with open(results,'r') as f:
-			lines=f.read().splitlines()
+	# session=SessionMaker()
+	# fdcDataQuery=session.query(FlowDurationData)
+	# if 'results' in request.POST['app.stores']:
+	# 	with open(results,'r') as f:
+	# 		lines=f.read().splitlines()
 
-		lines.pop(0)
-		session=SessionMaker()
+	# 	lines.pop(0)
+	# 	session=SessionMaker()
 
-		for line in lines:
-			row=line.split(',')
-			fdc_row=fdcData(
-				percent=row[0],
-				flow=row[1],
-				units='m^3/s'
-				)
+	# 	for line in lines:
+	# 		row=line.split(',')
+	# 		fdc_row=fdcData(
+	# 			percent=row[0],
+	# 			flow=row[1],
+	# 			units='m^3/s'
+	# 			)
 
-			session.add(fdc_row)
-		session.commit()
-		session.close()
+	# 		session.add(fdc_row)
+	# 	session.commit()
+	# 	session.close()
 
-	print session
+	# print session
 	fdc_tbv=TableView(column_names=('Percent (%)', unicode('Flow (m'+u'\u00b3'+'/s)')),
-					rows=fdcDataQuery,
+					rows=[(99, 2.65),(95,7.67),(90,9.02),(85,10.35),(75,12.19),(70,13.31),(60,13.33),(50,18.59),(40,19.01),(30,24.62),(20,33.32)],
 					hover=True,
 					striped=True,
 					bordered=True,
 					condensed=True,
 					editable_columns=(False,False,False),
-					row_ids=[range(0,3)]
+					row_ids=[range(0,10)]
 					)
 
 	plot_view=LinePlot(
@@ -64,7 +64,8 @@ def resultspage(request):
 			'name': 'Flow',
 			'color': '#0066ff',
 			'marker': {'enabled':False},
-			'data': fdcDataQuery
+			'data': [
+					[99,2.65],[95,7.67],[90,9.02],[85,10.35],[75,12.19],[70,13.31],[60,13.33],[50,18.59],[40,19.01],[30,24.62],[20,33.32]]
 
 		}]
 
