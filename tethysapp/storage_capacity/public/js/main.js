@@ -49,7 +49,7 @@ require(["dojo/dom",
     map.enableSnapping({alwaysSnap: true}).setLayerInfos(layerInfos);
 
     //creates geoprocessing task by calling geoprocessing service for server
-    gp = new Geoprocessor("http://geoserver.byu.edu/arcgis/rest/services/FDC_Jackson/FDC4/GPServer/FDC%20Calculator");
+    gp = new Geoprocessor("http://geoserver.byu.edu/arcgis/rest/services/FDC_Jackson/FDCCalc3/GPServer/FDC%20Calculator");
     gp.setOutputSpatialReference({wkid: 102100});
 
     //creates drawing tool
@@ -126,7 +126,8 @@ require(["dojo/dom",
         gp.getResultData(jobInfo.jobId, "watershed", drawWatershed, failedCallback);
         gp.getResultData(jobInfo.jobId, "reservoir", drawReservoir);
         gp.getResultData(jobInfo.jobId, "volume", getVolume);
-        gp.getResultData(jobInfo.jobId, "results", getResults);
+        resultsRequestSucceeded(jobInfo.jobId.messages[18].description);
+        //gp.getResultData(jobInfo.jobId, "results", getResults);
     }
 
     //prints alert for wrong input point on failed request
@@ -170,7 +171,7 @@ require(["dojo/dom",
             "url": volume.value.url,
             "handleAs": "text"
         });
-        alert(req)
+        alert("get volume" +req)
         req.then(volrequestSucceeded, volrequestFailed);
     }
 
@@ -180,8 +181,28 @@ require(["dojo/dom",
             "url": results.value.url,
             "handleAs":"text"
         });
-        alert("req")
-        req.then(requestSucceeded, requestFailed);
+        alert("get results"+req)
+        req.then(resultsRequestSucceeded, requestFailed);
+    }
+
+    //manipulates text file and adds results to FDC Results page
+    function resultsRequestSucceeded(response){
+        var flowList=response;
+        var percentList=JSON.stringify([99,95,90,85,80,75,70,60,50,40,30,20]);
+        $.ajax({
+            url: '/apps/storage_capacity/resultspage/',
+            type:'POST',
+            data: 'percentList='+percentList+'&flowList='+flowList,
+            success: function(responseHtml){
+                $('#results').html(responseHtml);
+                $('#plot_results').one(function(){
+                    initHighChartsPlot($('.highcharts-plot'),'spline');
+                });
+
+            }
+        
+    })
+
     }
 
     //manipulates text file and adds total volume to app on successful text file request
@@ -225,28 +246,102 @@ require(["dojo/dom",
         //     dataType:"json",
         //     url: "'storage_capacity/controllers.py",
         //     data: responsedata
+        // success:function(responseHtml){
+        //     $('#results').html(responseHtml);
+        //     //plot results to controllers.py
+        // }
         // })
     }
 
     //returns error on failed results text file request
     function requestFailed(error){
-        $("#fdc").html("<p class='bg-danger'>Error: " + error + " happened while retrieving the fdc values</p>")
+        $("#plot_results").html("<p class='bg-danger'>Error: " + error + " happened while retrieving the fdc values</p>");
     }
-    //creates CSV file for chart
-    function pointsManip(data){
+    //creates Charts
+    function initHighChartsPlot($element, plot_type) {
+            if ($element.attr('data-json')) {
+                var json_string, json;
 
-        var dataPoints=data;
-        var Lines=dataPoints.split('\n');
-        for (var i=0; i <Lines.length; i++)
-            if (Lines[i].length>0){
-                var points=Lines[i].split(',');
-                dataPoints.push({
-                    x:parseFloat(points[0]),
-                    y:parseFloat(points[1])
-                });
+                // Get string from data-json attribute of element
+                json_string = $element.attr('data-json');
+
+                // Parse the json_string with special reviver
+                json = JSON.parse(json_string, functionReviver);
+                $element.highcharts(json);
             }
-            return dataPoints
-    }
+            else if (plot_type === 'line' || plot_type === 'spline') {
+                initLinePlot($element[0], plot_type);
+            }
+        }
+
+        function initLinePlot(element, plot_type) {
+            var title = $(element).attr('data-title');
+            var subtitle = $(element).attr('data-subtitle');
+            var series = $.parseJSON($(element).attr('data-series'));
+            var xAxis = $.parseJSON($(element).attr('data-xAxis'));
+            var yAxis = $.parseJSON($(element).attr('data-yAxis'));
+
+            $(element).highcharts({
+                chart: {
+                    type: plot_type
+                },
+                title: {
+                    text: title,
+                    x: -20 //center
+                },
+                subtitle: {
+                    text: subtitle,
+                    x: -20
+                },
+                xAxis: {
+                    title: {
+                        text: xAxis['title']
+                    },
+                    labels: {
+                        formatter: function() {
+                            return this.value + xAxis['label'];
+                        }
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: yAxis['title']
+                    },
+                    labels: {
+                        formatter: function() {
+                            return this.value + yAxis['label'];
+                        }
+                    }
+                },
+                tooltip: {
+                    valueSuffix: '°C'
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: series
+            });
+        }
+
+        function functionReviver(k, v) {
+            if (typeof v === 'string' && v.indexOf('function') !== -1) {
+                var fn;
+                // Pull out the 'function()' portion of the string
+                v = v.replace('function ()', '');
+                v = v.replace('function()', '');
+
+                // Create a function from the string passed in
+                fn = Function(v);
+
+                // Return the handle to the function that was created
+                return fn;
+            } else {
+                return v;
+            }
+        }
 
     //adds public functions to variable app
     app = {map: map, drawPoint: drawPoint, submitResRequest: submitResRequest};

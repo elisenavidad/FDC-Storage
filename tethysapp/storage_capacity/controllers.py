@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from tethys_sdk.gizmos import TableView, LinePlot
 
 from .model import SessionMaker, FlowDurationData
+import json, sys, cgi
+
 
 @login_required()
 def home(request):
@@ -17,28 +19,9 @@ def resultspage(request):
 	"""
 	Controller for the app results page.
 	"""
-	# session=SessionMaker()
-	# fdcDataQuery=session.query(FlowDurationData)
-	# if 'results' in request.POST['app.stores']:
-	# 	with open(results,'r') as f:
-	# 		lines=f.read().splitlines()
+	fdcData=cgi.FieldStorage()
 
-	# 	lines.pop(0)
-	# 	session=SessionMaker()
 
-	# 	for line in lines:
-	# 		row=line.split(',')
-	# 		fdc_row=fdcData(
-	# 			percent=row[0],
-	# 			flow=row[1],
-	# 			units='m^3/s'
-	# 			)
-
-	# 		session.add(fdc_row)
-	# 	session.commit()
-	# 	session.close()
-
-	# print session
 	fdc_tbv=TableView(column_names=('Percent (%)', unicode('Flow (m'+u'\u00b3'+'/s)')),
 					rows=[(99, 2.65),(95,7.67),(90,9.02),(85,10.35),(75,12.19),(70,13.31),(60,13.33),(50,18.59),(40,19.01),(30,24.62),(20,33.32)],
 					hover=True,
