@@ -109,7 +109,6 @@ require(["dojo/dom",
 
     //displays request status
     function statusCallback(jobInfo) {
-        // console.log(jobInfo);
         if (jobInfo.jobStatus === "esriJobSubmitted") {
             $("#vol").html("<h6>Request submitted...</h6>");
         } else if (jobInfo.jobStatus === "esriJobExecuting") {
@@ -126,7 +125,17 @@ require(["dojo/dom",
         gp.getResultData(jobInfo.jobId, "watershed", drawWatershed, failedCallback);
         gp.getResultData(jobInfo.jobId, "reservoir", drawReservoir);
         gp.getResultData(jobInfo.jobId, "volume", getVolume);
-        resultsRequestSucceeded(jobInfo.jobId.messages[18].description);
+        console.log("got volume")
+        var flowList=jobInfo.messages[18].description;
+        console.log(flowList);
+        var percentList=JSON.stringify([99,95,90,85,80,75,70,60,50,40,30,20]);
+        console.log(percentList);
+        console.log('/apps/storage-capacity/resultspage/?key1='+flowList+'&key2='+percentList);
+        window.open('/apps/storage-capacity/resultspage/?key1='+flowList+'&key2='+percentList);
+
+
+
+        // resultsRequestSucceeded(jobInfo.JobId.messages[18].description);
         //gp.getResultData(jobInfo.jobId, "results", getResults);
     }
 
@@ -176,32 +185,34 @@ require(["dojo/dom",
     }
 
     //sends request to get results text file from server
-    function getResults(results) {
-        var req=esriRequest({
-            "url": results.value.url,
-            "handleAs":"text"
-        });
-        alert("get results"+req)
-        req.then(resultsRequestSucceeded, requestFailed);
-    }
+    // function getResults(results) {
+    //     var req=esriRequest({
+    //         "url": results.value.url,
+    //         "handleAs":"text"
+    //     });
+    //     alert("get results"+req)
+    //     req.then(resultsRequestSucceeded, requestFailed);
+    // }
 
     //manipulates text file and adds results to FDC Results page
     function resultsRequestSucceeded(response){
+        console.log("request started");
         var flowList=response;
         var percentList=JSON.stringify([99,95,90,85,80,75,70,60,50,40,30,20]);
-        $.ajax({
-            url: '/apps/storage_capacity/resultspage/',
-            type:'POST',
-            data: 'percentList='+percentList+'&flowList='+flowList,
-            success: function(responseHtml){
-                $('#results').html(responseHtml);
-                $('#plot_results').one(function(){
-                    initHighChartsPlot($('.highcharts-plot'),'spline');
-                });
+        window.open('/apps/storage-capacity/resultspage/?key1='+flowList+'&key2='+percentList);
+    //     $.ajax({
+    //         url: '/apps/storage_capacity/resultspage/',
+    //         type:'POST',
+    //         data: 'percentList='+percentList+'&flowList='+flowList,
+    //         success: function(responseHtml){
+    //             $('#results').html(responseHtml);
+    //             $('#plot_results').one(function(){
+    //                 initHighChartsPlot($('.highcharts-plot'),'spline');
+    //             });
 
-            }
+    //         }
         
-    })
+    // })
 
     }
 

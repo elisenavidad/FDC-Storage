@@ -19,11 +19,25 @@ def resultspage(request):
 	"""
 	Controller for the app results page.
 	"""
-	fdcData=cgi.FieldStorage()
+
+	data=request.GET
+	flowlist=data['key1']
+	percentList=data['key2']
+	print flowlist
+	print percentList
+	flowlist=flowlist[1:-1]
+	flowlist_list=flowlist.split(",")
+	percentList=percentList[1:-1]
+	percentList_list=percentList.split(",")
+	paired_data=zip(percentList_list,flowlist_list)
+	print paired_data
+	plot_data=[[float(s.encode('ascii')) for s in list] for list in paired_data]
+
+	print plot_data
 
 
 	fdc_tbv=TableView(column_names=('Percent (%)', unicode('Flow (m'+u'\u00b3'+'/s)')),
-					rows=[(99, 2.65),(95,7.67),(90,9.02),(85,10.35),(75,12.19),(70,13.31),(60,13.33),(50,18.59),(40,19.01),(30,24.62),(20,33.32)],
+					rows=paired_data,#[(99, 2.65),(95,7.67),(90,9.02),(85,10.35),(75,12.19),(70,13.31),(60,13.33),(50,18.59),(40,19.01),(30,24.62),(20,33.32)],
 					hover=True,
 					striped=True,
 					bordered=True,
@@ -47,9 +61,7 @@ def resultspage(request):
 			'name': 'Flow',
 			'color': '#0066ff',
 			'marker': {'enabled':False},
-			'data': [
-					[99,2.65],[95,7.67],[90,9.02],[85,10.35],[75,12.19],[70,13.31],[60,13.33],[50,18.59],[40,19.01],[30,24.62],[20,33.32]]
-
+			'data': plot_data
 		}]
 
 		)
