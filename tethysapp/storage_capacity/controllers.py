@@ -20,17 +20,21 @@ def resultspage(request):
 	Controller for the app results page.
 	"""
 
+	#Get fdc data from main.js file through GET function
 	data=request.GET
 	flowlist=data['key1']
 	percentList=data['key2']
 	print flowlist
 	print percentList
+	#format lists, and split by ,
 	flowlist=flowlist[1:-1]
 	flowlist_list=flowlist.split(",")
 	percentList=percentList[1:-1]
 	percentList_list=percentList.split(",")
+	#zip percentList and flowlist into ordered pairs for TableView
 	paired_data=zip(percentList_list,flowlist_list)
 	print paired_data
+	#convert string list to floating array for LinePlot
 	plot_data=[[float(s.encode('ascii')) for s in list] for list in paired_data]
 
 	print plot_data

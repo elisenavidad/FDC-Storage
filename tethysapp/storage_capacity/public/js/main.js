@@ -125,18 +125,16 @@ require(["dojo/dom",
         gp.getResultData(jobInfo.jobId, "watershed", drawWatershed, failedCallback);
         gp.getResultData(jobInfo.jobId, "reservoir", drawReservoir);
         gp.getResultData(jobInfo.jobId, "volume", getVolume);
-        console.log("got volume")
+        // console.log("got volume")
+        // access list of flows from ArcGIS messages
         var flowList=jobInfo.messages[18].description;
         console.log(flowList);
+        //create list of percents to build table
         var percentList=JSON.stringify([99,95,90,85,80,75,70,60,50,40,30,20]);
         console.log(percentList);
+        //post flowList and percentList to controller.py
         console.log('/apps/storage-capacity/resultspage/?key1='+flowList+'&key2='+percentList);
         window.open('/apps/storage-capacity/resultspage/?key1='+flowList+'&key2='+percentList);
-
-
-
-        // resultsRequestSucceeded(jobInfo.JobId.messages[18].description);
-        //gp.getResultData(jobInfo.jobId, "results", getResults);
     }
 
     //prints alert for wrong input point on failed request
@@ -180,41 +178,9 @@ require(["dojo/dom",
             "url": volume.value.url,
             "handleAs": "text"
         });
-        alert("get volume" +req)
         req.then(volrequestSucceeded, volrequestFailed);
     }
 
-    //sends request to get results text file from server
-    // function getResults(results) {
-    //     var req=esriRequest({
-    //         "url": results.value.url,
-    //         "handleAs":"text"
-    //     });
-    //     alert("get results"+req)
-    //     req.then(resultsRequestSucceeded, requestFailed);
-    // }
-
-    //manipulates text file and adds results to FDC Results page
-    function resultsRequestSucceeded(response){
-        console.log("request started");
-        var flowList=response;
-        var percentList=JSON.stringify([99,95,90,85,80,75,70,60,50,40,30,20]);
-        window.open('/apps/storage-capacity/resultspage/?key1='+flowList+'&key2='+percentList);
-    //     $.ajax({
-    //         url: '/apps/storage_capacity/resultspage/',
-    //         type:'POST',
-    //         data: 'percentList='+percentList+'&flowList='+flowList,
-    //         success: function(responseHtml){
-    //             $('#results').html(responseHtml);
-    //             $('#plot_results').one(function(){
-    //                 initHighChartsPlot($('.highcharts-plot'),'spline');
-    //             });
-
-    //         }
-        
-    // })
-
-    }
 
     //manipulates text file and adds total volume to app on successful text file request
     function volrequestSucceeded(response){
@@ -231,128 +197,6 @@ require(["dojo/dom",
     function volrequestFailed(error){
         $("#vol").html("<p class='bg-danger'>Error: " + error + " happened while retrieving the volume</p>");
     }
-
-    //manipulates results.txt to display on results page
-    function requestSucceeded(response){
-        console.log(response)
-        alert(response)
-        // var elem=response.split("/n");
-        // var responsedata=[];
-        // var headers=elem[0].split(",");
-        // for(var i=1;i<elems.length;i++){
-        //     var obj={};
-        //     var currentline=elem[i].split(",");
-        //     for(var j=0;j<headers.length;j++){\
-        //         obj[headers[j]]=currentline[j];
-        //     }
-        // responsedata.push(obj);
-
-        // }
-        // //return result as JSON object
-        // console.log(responsedata);
-        // return JSON.stringify(responsedata);
-
-        // $.ajax({
-        //     type:"POST",
-        //     dataType:"json",
-        //     url: "'storage_capacity/controllers.py",
-        //     data: responsedata
-        // success:function(responseHtml){
-        //     $('#results').html(responseHtml);
-        //     //plot results to controllers.py
-        // }
-        // })
-    }
-
-    //returns error on failed results text file request
-    function requestFailed(error){
-        $("#plot_results").html("<p class='bg-danger'>Error: " + error + " happened while retrieving the fdc values</p>");
-    }
-    //creates Charts
-    function initHighChartsPlot($element, plot_type) {
-            if ($element.attr('data-json')) {
-                var json_string, json;
-
-                // Get string from data-json attribute of element
-                json_string = $element.attr('data-json');
-
-                // Parse the json_string with special reviver
-                json = JSON.parse(json_string, functionReviver);
-                $element.highcharts(json);
-            }
-            else if (plot_type === 'line' || plot_type === 'spline') {
-                initLinePlot($element[0], plot_type);
-            }
-        }
-
-        function initLinePlot(element, plot_type) {
-            var title = $(element).attr('data-title');
-            var subtitle = $(element).attr('data-subtitle');
-            var series = $.parseJSON($(element).attr('data-series'));
-            var xAxis = $.parseJSON($(element).attr('data-xAxis'));
-            var yAxis = $.parseJSON($(element).attr('data-yAxis'));
-
-            $(element).highcharts({
-                chart: {
-                    type: plot_type
-                },
-                title: {
-                    text: title,
-                    x: -20 //center
-                },
-                subtitle: {
-                    text: subtitle,
-                    x: -20
-                },
-                xAxis: {
-                    title: {
-                        text: xAxis['title']
-                    },
-                    labels: {
-                        formatter: function() {
-                            return this.value + xAxis['label'];
-                        }
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: yAxis['title']
-                    },
-                    labels: {
-                        formatter: function() {
-                            return this.value + yAxis['label'];
-                        }
-                    }
-                },
-                tooltip: {
-                    valueSuffix: '°C'
-                },
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle',
-                    borderWidth: 0
-                },
-                series: series
-            });
-        }
-
-        function functionReviver(k, v) {
-            if (typeof v === 'string' && v.indexOf('function') !== -1) {
-                var fn;
-                // Pull out the 'function()' portion of the string
-                v = v.replace('function ()', '');
-                v = v.replace('function()', '');
-
-                // Create a function from the string passed in
-                fn = Function(v);
-
-                // Return the handle to the function that was created
-                return fn;
-            } else {
-                return v;
-            }
-        }
 
     //adds public functions to variable app
     app = {map: map, drawPoint: drawPoint, submitResRequest: submitResRequest};
