@@ -23,25 +23,24 @@ def resultspage(request):
 	#Get fdc data from main.js file through GET function
 	data=request.GET
 	flowlist=data['key1']
-	percentList=data['key2']
 	print flowlist
-	print percentList
-	#format lists, and split by ,
+	#format flowlist, and split by ,
 	flowlist=flowlist[1:-1]
 	flowlist_list=flowlist.split(",")
-	percentList=percentList[1:-1]
-	percentList_list=percentList.split(",")
-	#zip percentList and flowlist into ordered pairs for TableView
-	paired_data=zip(percentList_list,flowlist_list)
-	print paired_data
-	#convert string list to floating array for LinePlot
-	plot_data=[[float(s.encode('ascii')) for s in list] for list in paired_data]
+	flow_float=[float(s.encode('ascii')) for s in flowlist_list]
+	flow_format=['%.2f' % elem for elem in flow_float]
+	#define percentages
+	plist=[99,95,90,85,75,70,60,50,40,30,20]
+	#zip lists together
+	paired_lists=zip(plist,flow_format)
+	print paired_lists
+	#format for LinePlot
+	plot_data=[[float(s) for s in list] for list in paired_lists]
 
-	print plot_data
 
 
 	fdc_tbv=TableView(column_names=('Percent (%)', unicode('Flow (m'+u'\u00b3'+'/s)')),
-					rows=paired_data,#[(99, 2.65),(95,7.67),(90,9.02),(85,10.35),(75,12.19),(70,13.31),(60,13.33),(50,18.59),(40,19.01),(30,24.62),(20,33.32)],
+					rows=paired_lists,
 					hover=True,
 					striped=True,
 					bordered=True,

@@ -129,12 +129,9 @@ require(["dojo/dom",
         // access list of flows from ArcGIS messages
         var flowList=jobInfo.messages[18].description;
         console.log(flowList);
-        //create list of percents to build table
-        var percentList=JSON.stringify([99,95,90,85,80,75,70,60,50,40,30,20]);
-        console.log(percentList);
-        //post flowList and percentList to controller.py
-        console.log('/apps/storage-capacity/resultspage/?key1='+flowList+'&key2='+percentList);
-        window.open('/apps/storage-capacity/resultspage/?key1='+flowList+'&key2='+percentList);
+        //post flowList and to controller.py
+        console.log('/apps/storage-capacity/resultspage/?key1='+flowList);
+        window.open('/apps/storage-capacity/resultspage/?key1='+flowList);
     }
 
     //prints alert for wrong input point on failed request
