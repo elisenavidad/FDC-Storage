@@ -103,5 +103,10 @@ The following were some of the most important functions used with the ArcGIS API
   <td><p>getVolume</p></td>
   <td><p>Makes request to retrieve volume data and calls function to display resulting reservoir volume</p></td>
  </tr>
+ <tr>
+ <td><p>completeCallback</p></td>
+ <td><p>Makes request to retrieve flow duration data from the geoserver, and posts the data to the controller to create the Flow-Duration curve.</p></td>
+ </tr>
 </table>
 # FDC-Storage
+The Flow-Duration curve is produced after the analysis is run, and opens in a new tab of the internet browser.  Make sure to enable pop-ups to view the results. 
