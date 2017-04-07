@@ -36,7 +36,7 @@ This application is licensed under an open source MIT license.
 
 ####Application Design
 
-A simple approach was taken when designing the front end part of the app. A help guide is provided in the app in case any of the steps necessary to run the app is not clear enough. The application was designed as a two-page website. It can be accessed from BYU Tethys portal (http://tethys.byu.edu/) as shown in Figure 1 below. A zoomed in image of the buttons used to calculate a potential dam and reservoir volume, and generate the flow-duration curve is shown in Figure 2. After running the application successfully, the calculated reservoir will appear on the main map window with the calculated reservoir volume in cubic meters, shown in Figure 3.  The flow-duration curve can be found on the results page of the application by clicking the "FDC Results" button.
+A simple approach was taken when designing the front end part of the app. A help guide is provided in the app in case any of the steps necessary to run the app is not clear enough. The application was designed as a two-page website. It can be accessed from BYU Tethys portal (http://tethys.byu.edu/) as shown in Figure 1 below. A zoomed in image of the buttons used to calculate a potential dam and reservoir volume, and generate the flow-duration curve is shown in Figure 2. After running the application successfully, the calculated reservoir will appear on the main map window with the calculated reservoir volume in cubic meters, shown in Figure 3.  The flow-duration curve can be found on the results page of the application which automatically opens in a new browser window, shown in Figure 4. Ensure that pop-ups are allowed to see the Results page.
 
 An alternative to using Tethys is possible, since this app mainly used the ArcGIS API for JavaScript for most of 
 its functionality (see main.js file in the repository), however, an HTML page together with styling would need to be 
@@ -48,14 +48,17 @@ src="https://github.com/msouff/storageCapacityDR/blob/master/tethysapp/storage_c
 Figure 1. Home page of Tethys Portal to access Storage Capacity-FDC application.
 
 <img border=0 width=301 height=340 id="Picture 3"
-src="https://github.com/msouff/storageCapacityDR/blob/master/tethysapp/storage_capacity/public/images/optionSCREENSHOT.JPG">
+src="https://github.com/elisenavidad/FDC-Storage/blob/master/tethysapp/storage_capacity/public/images/Functionality.png">
 
 Figure 2. Functions used to properly run the application.
 
 <img border=0 width=624 height=357 id="Picture 4"
-src="https://github.com/msouff/storageCapacityDR/blob/master/tethysapp/storage_capacity/public/images/appSCREENSHOT.JPG">
+src="https://github.com/elisenavidad/FDC-Storage/blob/master/tethysapp/storage_capacity/public/images/appScreenshot">
 
 Figure 3. Final result after successfully running the Storage Capacity application.
+
+<img border=0 width=624 height=357 id="Picture 6"
+src="https://github.com/elisenavidad/FDC-Storage/blob/master/tethysapp/storage_capacity/public/images/Results.png">
 
 ####Main Files
 
@@ -63,12 +66,12 @@ The main files associated with this application include raster data (surface ele
 
 ####Code Structure
 
-The basic structure of the Python script that calculates storage capacity is shown in the flowchart below, Figure 4. The blue filled circles represent input features necessary for the geoprocessing task to run. The red filled shapes represent processing steps. The orange squares represent intermediate features, some of which are also saved as outputs (e.g. the watershed and reservoir features).
+The basic structure of the Python script that calculates storage capacity is shown in the flowchart below, Figure 5. The blue filled circles represent input features necessary for the geoprocessing task to run. The red filled shapes represent processing steps. The orange squares represent intermediate features, some of which are also saved as outputs (e.g. the watershed and reservoir features).
 
 <img border=0 width=625 height=461 id="Picture 2"
 src="https://github.com/msouff/storageCapacityDR/blob/master/tethysapp/storage_capacity/public/images/script_structure.jpg">
 
-Figure 4. Python script structure diagram. This is a simplified diagram. The actual script uses more steps that the ones shown here.
+Figure 5. Python script structure diagram. This is a simplified diagram. The actual script uses more steps that the ones shown here.
 
 ####Key Functions
 
