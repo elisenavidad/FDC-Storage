@@ -68,7 +68,7 @@ The main files associated with this application include raster data (surface ele
 
 The basic structure of the Python script that calculates storage capacity is shown in the flowchart below, Figure 5. The yellow filled circles represent input features necessary for the geoprocessing task to run. The green filled shapes represent processing steps. The blue squares represent intermediate features, some of which are also saved as outputs (e.g. the watershed and reservoir features).
 
-<img border=0 width=625 height=461 id="Picture 2"
+<img border=0 width=700 height=461 id="Picture 2"
 src="https://github.com/elisenavidad/FDC-Storage/blob/master/tethysapp/storage_capacity/public/images/codestructure.JPG">
 
 Figure 5. Python script structure diagram. This is a simplified diagram. The actual script uses more steps that the ones shown here.
