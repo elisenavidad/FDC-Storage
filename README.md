@@ -2,7 +2,7 @@
 
 ##Software Details
 
-This application was built for the purpose of computing reservoir volumes and flow-duration curves from a specified location and a specific curve number within the Dominican Republic (<a href="http://tethys.byu.edu/apps/storage-capacity/" target="_blank">Click here to go to the app</a>). The application was designed using a python script, which was added to an ArcGIS Server as a geoprocessing service, and Tethys platform in combination with the ArcGIS API for JavaScript for the front end of the app. This application was created by Elise Jackson.  Much of the front end JavaScript code was written by Michael Souffront. 
+This application was built for the purpose of computing reservoir volumes and flow-duration curves from a specified location and a specific curve number within the Dominican Republic (<a href="http://tethys.byu.edu/apps/storage-capacity/" target="_blank">Click here to go to the app</a>). The application builds on the work done by Michael Souffront in the Storage Capacity app.  The application was designed using a python script, which was added to an ArcGIS Server as a geoprocessing service, and Tethys platform in combination with the ArcGIS API for JavaScript for the front end of the app. This application was created by Elise Jackson.
 
 ####Installation:
 
@@ -62,14 +62,14 @@ src="https://github.com/elisenavidad/FDC-Storage/blob/master/tethysapp/storage_c
 
 ####Main Files
 
-The main files associated with this application include raster data (surface elevation, flow direction, and flow accumulation), a map service with the main streams in the Dominican Republic, and the geoprocessing service task to calculate storage capacity.
+The main files associated with this application include raster data (surface elevation, flow direction, and flow accumulation), a map service with the main streams in the Dominican Republic, and the geoprocessing service task to calculate storage capacity and the flow-duration curve values. 
 
 ####Code Structure
 
-The basic structure of the Python script that calculates storage capacity is shown in the flowchart below, Figure 5. The blue filled circles represent input features necessary for the geoprocessing task to run. The red filled shapes represent processing steps. The orange squares represent intermediate features, some of which are also saved as outputs (e.g. the watershed and reservoir features).
+The basic structure of the Python script that calculates storage capacity is shown in the flowchart below, Figure 5. The yellow filled circles represent input features necessary for the geoprocessing task to run. The green filled shapes represent processing steps. The blue squares represent intermediate features, some of which are also saved as outputs (e.g. the watershed and reservoir features).
 
-<img border=0 width=625 height=461 id="Picture 2"
-src="https://github.com/msouff/storageCapacityDR/blob/master/tethysapp/storage_capacity/public/images/script_structure.jpg">
+<img border=0 width=700 height=461 id="Picture 2"
+src="https://github.com/elisenavidad/FDC-Storage/blob/master/tethysapp/storage_capacity/public/images/codestructure.JPG">
 
 Figure 5. Python script structure diagram. This is a simplified diagram. The actual script uses more steps that the ones shown here.
 
@@ -111,5 +111,3 @@ The following were some of the most important functions used with the ArcGIS API
  <td><p>Makes request to retrieve flow duration data from the geoserver, and posts the data to the controller to create the Flow-Duration curve.</p></td>
  </tr>
 </table>
-# FDC-Storage
-The Flow-Duration curve is produced after the analysis is run, and opens in a new tab of the internet browser.  Make sure to enable pop-ups to view the results. 
