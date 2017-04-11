@@ -8,7 +8,7 @@ class StorageCapacity(TethysAppBase):
 
     name = 'FDC and Storage Capacity'
     index = 'storage_capacity:home'
-    icon = 'storage_capacity/images/dam_icon.svg'
+    icon = 'storage_capacity/images/app-logo2.png'
     package = 'storage_capacity'
     root_url = 'storage-capacity'
     color = 'blue'
