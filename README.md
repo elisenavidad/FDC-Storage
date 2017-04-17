@@ -4,6 +4,8 @@
 
 This application was built for the purpose of computing reservoir volumes and flow-duration curves from a specified location and a specific curve number within the Dominican Republic (<a href="http://tethys.byu.edu/apps/storage-capacity/" target="_blank">Click here to go to the app</a>). The application builds on the work done by Michael Souffront in the Storage Capacity app.  The application was designed using a python script, which was added to an ArcGIS Server as a geoprocessing service, and Tethys platform in combination with the ArcGIS API for JavaScript for the front end of the app. This application was created by Elise Jackson.
 
+For best results, ensure that pop-ups are allowed in the web browser.  This enables the results page to open when the analysis has finished.  The analysis takes an average of 7 minutes to run. Do not click within the map window while the process is running. 
+
 ####Installation:
 
 ######Prerequisites:
